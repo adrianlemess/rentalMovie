@@ -1,0 +1,27 @@
+{
+  "name": "RentMovie",
+  "version": "1.0.0",
+  "description": "RentMovie API ",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "adrianlemess",
+  "license": "ISC",
+  "dependencies": {
+    "Q": "0.0.1",
+    "body-parser": "^1.15.2",
+    "cors": "^2.8.0",
+    "express": "^4.14.0",
+    "helmet": "^2.1.2",
+    "logger": "0.0.1",
+    "method-override": "^2.3.6",
+    "mm-node-logger": "0.0.1",
+    "morgan": "^1.7.0",
+    "multer": "^1.2.0",
+    "mysql": "^2.11.1",
+    "passport-jwt": "^2.1.0",
+    "path": "^0.12.7",
+    "redis": "^2.6.2"
+  }
+}

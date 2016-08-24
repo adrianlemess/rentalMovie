@@ -1,0 +1,59 @@
+registerUser(user)
+	- Verificar se o usuário ja existe
+	- Verificar se o email já existe
+	- Verificar se a senha atende a requisitos minimos
+	- Criptografar senha
+login(email, password)
+	- Verificar usuário
+	- Logar usuário
+logoff(user)
+	- Tirar sessão do usuário 
+	- Apagar token no redis
+availableMoviesList()
+	- Listar filmes disponíveis
+	- Negar acesso caso o usuário não esteja logado
+rentMovie(idMovie)
+	- Alugar um filme
+	- Retornar erro caso o filme não esteja disponível (available quantity)
+	- Retornar erro caso o ID do filme não exista
+	- Negar acesso caso o usuário não esteja logado
+returnMovie(idMovie)
+	- Devolver o filme (incrementar available quantity)
+	- Retornar erro caso o usuário devolva um filme que ele não tenha alugado (verificar na tabela rent_movie retornar erro caso não tenha o registro dele)
+	- Retornar erro caso o usuário tente devolve o mesmo filme mais de uma vez (verificar o return_at pra aquele registro)
+	- Retornar erro caso o filme não exista
+	- Negar acesso caso o usuário não esteja logado 
+searchMovie(movieName)
+	- Retornar filme
+	- Erro filme não encontrado
+	- Negar acesso caso o usuário não esteja logado
+- Esquema do Banco
+- Estrutura da API
+- Configs da API
+- Camada Service
+	- registerUser(user)
+	- login(email, password)
+	- logoff(user)
+	- availableMoviesList()
+	- rentMovie(idMovie)
+	- returnMovie(idMovie)
+	- searchMovie(movieName)
+- Camada controller
+	- registerUser(user)
+	- login(email, password)
+	- logoff(user)
+	- availableMoviesList()
+	- rentMovie(idMovie)
+	- returnMovie(idMovie)
+	- searchMovie(movieName)
+- Rotas
+- Proteger rotas
+- Testar autenticação
+- Testar rotas
+- Fazer java doc para cada arquivo de camada
+- Fazer java doc para as funções dificeis de entender
+- Criar documentação com as rotas e parâmetros a receber
+- Gerar esquema do banco
+- Criar seed com alguns filmes padrões
+- Empacotar tudo
+- Botar no github com arquivo Readme de como instalar
