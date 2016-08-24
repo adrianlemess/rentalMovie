@@ -14,8 +14,11 @@ config.server = {
 };
 
 // MongoDB settings
-config.mongodb = {
-    dbURI: "mongodb://127.0.0.1:27017/rentalMovies"
+config.db = {
+    host     : '127.0.0.1',
+    user     : 'root',
+    password : '',
+    database : 'rentalmovies'
 };
 
 // Export configuration object

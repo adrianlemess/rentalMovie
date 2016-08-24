@@ -1,13 +1,14 @@
 var express = require('express'),
     config   = require('./config'),
     path = require('path'),
-    mongoose = require('mongoose'),
     morgan = require('morgan'),
     cors = require('cors'),
     helmet = require('helmet'),
     multer = require('multer'),
     logger = require('mm-node-logger')(module),
     bodyParser = require('body-parser'),
+    mysql = require('mysql'),
+    connection  = require('express-myconnection'), 
     methodOverride = require('method-override'), //used to manipulate POST
     // userService = require('../services/user.service'),
     // movieService = require('../services/movie.service'),
@@ -33,8 +34,7 @@ const SixMonths = 15778476000;
     app.use(bodyParser.urlencoded({
         extended: true
     }));
-    app.use(bodyParser.json());
-    app.use(methodOverride());
+
 
 }
 function initHelmetHeaders(app) {
@@ -66,6 +66,7 @@ function initRoutes(app) {
 }
 
 function initDB() {
+    
     if(config.seedDB) {
         require('./seed');
     }

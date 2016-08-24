@@ -1,18 +1,37 @@
-var express    = require("express"),
-mysql      = require('mysql');
+// Dependencies
+var mysql   = require('mysql'),
+    config  = require("./config");
 
-var connection = mysql.createConnection({
-  host     : 'localhost',
-  user     : 'root',
-  password : '',
-  database : 'rentalMovie'
-});
-var app = express();
+/*
+ * @sqlConnection
+ * Creates the connection, makes the query and close it to avoid concurrency conflicts.
+ */
+var connection = function sqlConnection(sql, values, next) {
 
-connection.connect(function(err){
-if(!err) {
-    console.log("Database is connected ... nn");    
-} else {
-    console.log("Error connecting database ... nn");    
+    // It means that the values hasnt been passed
+    if (arguments.length === 2) {
+        next = values;
+        values = null;
+    }
+
+    var connection = mysql.createConnection(config.db);
+    connection.connect(function(err) {
+        if (err !== null) {
+            console.log("[MYSQL] Error connecting to mysql:" + err+'\n');
+        }
+    });
+
+    connection.query(sql, values, function(err) {
+
+        connection.end(); // close the connection
+
+        if (err) {
+            throw err;
+        }
+
+        // Execute the callback
+        next.apply(this, arguments);
+    });
 }
-});
+
+module.exports = connection;

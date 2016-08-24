@@ -4,7 +4,7 @@
  */
 var express = require('express'),
 router = express.Router();
-// movieController = require('../controllers/movie.controller'),
+movieController = require('../controllers/movie.controller'),
 // userController = require('./controllers/user.controller');
 
 
@@ -20,7 +20,7 @@ router.get('/',function(req, res){
 // router.get('/auth/logout', userController.signout);
 
 // //Movies
-// router.get('/movies', movieController.availableMoviesList);
+ router.get('/movies', movieController.availableMoviesList);
 // router.get('/movie/rentMovie/:idMovie', movieController.rentMovie);
 // router.put('/movie/returnMovie/:idMovie', movieController.returnMovie);
 // router.get('/movie/:movieName', movieController.searchMovie);
