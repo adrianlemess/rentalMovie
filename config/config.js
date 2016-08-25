@@ -5,7 +5,12 @@ var config = {};
 config.environment = process.env.NODE_ENV || 'development';
 
 // Populate the DB with sample data
-config.seedDB = true;
+config.seedDB = false;
+// Token settings
+config.token = {
+    secret: process.env.TOKEN_SECRET || 'rentalmovies',
+    expiration: process.env.TOKEN_EXPIRATION || 60*60*24 //24 hours
+};
 
 // Server settings
 config.server = {

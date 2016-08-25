@@ -69,7 +69,6 @@ CREATE TABLE IF NOT EXISTS `rentalmovies`.`rent_movie` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = latin1;
 
-
 -- -----------------------------------------------------
 -- Table `rentalmovies`.`users_token`
 -- -----------------------------------------------------

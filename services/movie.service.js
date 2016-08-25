@@ -24,7 +24,7 @@ module.exports = service;
 
 function availableMoviesList (){
     var deferred = Q.defer();
-        query('SELECT * from movies where quantity_rent > 0', function(err, rows)   {
+        query('SELECT * from movies where quantity_rent < quantity_total', function(err, rows)   {
             if (err){
                 deferred.reject(err);
             }else {
@@ -46,11 +46,11 @@ function availableMoviesList (){
         return deferred.promise
     } 
 
-function rentMovie (movie){
+function rentMovie (movie, idUser){
     var deferred = Q.defer();
 
     rent_movie = {
-        users_id: 2,
+        users_id: idUser,
         movies_id:movie.id,
         rent_at: (new Date())
     }
@@ -71,20 +71,27 @@ function rentMovie (movie){
     return deferred.promise;
 } 
 
-function returnMovie (movie, user){
+function returnMovie (movie, userId){
     var deferred = Q.defer();
-
-    query('SELECT * from rent_movie WHERE ? and ?',[{movies_id: movie.id}, {users_id: 2}],function(err, response){
+    
+    query('SELECT * from rent_movie WHERE ? and ? and return_at is null ',[{movies_id: movie.id}, {users_id: userId}],function(err, rent_movie){
         if (err){
             deferred.reject(err);
+        }else if (rent_movie.length > 0){
+            query('UPDATE movies SET quantity_rent = quantity_rent-1 WHERE ?',{id:movie.id},function(err, response){
+                if (err)deferred.reject(err);
+                else {
+                    var date = new Date();
+                    query('UPDATE rent_movie SET ? WHERE ?',[{return_at:date},{id_rent_movie:rent_movie[0].id_rent_movie}],function(err, response){
+                        deferred.resolve("Devolvido com sucesso");
+                    })
+                }
+            })          
         }else {
-            deferred.resolve("Filme alugado certo");
+            deferred.reject("Você não alugou esse filme");
         }
     })
-
     return deferred.promise;
-
-
 } 
 
 function getMovieByName (movieName){

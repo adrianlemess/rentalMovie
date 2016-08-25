@@ -40,59 +40,15 @@ var query        = require('./mysql'),
      movies.push(movie3);
      movies.push(movie4);
 
-
-cleanBase().then(function(response){
-        console.log("terminou de limpar a base");
-    insertMovies(movies).then(function(response){
-        console.log("terminou de inserir os filmes");
+     movieService.getAllMovies().then(function(moviesList){
+     async.each(moviesList, function(movie, callback){
+         query('DELETE from movies where ?',{id:movie.id}, function(err, response){
+            callback(response);
+        })    
+     }, function(result){
+        insertMovies(movies);
     })
- 
-})
-
-function cleanBase() {
-    var the_promises = [];
-    query("TRUNCATE rent_movie", function(err){
-         movieService.getAllMovies().then(function(moviesList){
-        moviesList.forEach(function(movie) {
-        var deferred = Q.defer();
-        query('DELETE from movies where ?',{id:movie.id}, function(err, response){
-            deferred.resolve(response);
-        })           
-        the_promises.push(deferred.promise);
-        });
-    })
-    })
-
-    return Q.all(the_promises);
-}
-
-
-// async.each(contact.phoneNumbers, function(phone, callback2){
-//             userService.getValidNumberPhone(phone.value).then(function(numberPhone){
-//                 numberPhone = "+"+numberPhone;
-//                 userService.getUser(numberPhone, function(user) {
-//                 if (user && user.registrationFlag != false){
-//                     var newContact = {name: user.name, phone: {value: user.phone.value}, registrationFlag: true, _id:user._id};
-//                     callback2(newContact)
-//                 }else {
-//                     callback2(); 
-//                 }
-//              });
-//             }).fail(function(){
-//                 callback2();
-//             })
-//         }, 
-//         function(result){
-//             if (!result){
-//                 var newContact2 = {name: contact.name.formatted, phone:contact.phoneNumbers, registrationFlag: false};
-//                 return doneCallback(null, newContact2)
-//             }else {
-//                 return doneCallback(null, result)
-//             }
-//         })        
-//     }
-
-
+     })
 
 function insertMovies(moviesList) {
     var the_promises = [];

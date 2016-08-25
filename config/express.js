@@ -22,7 +22,8 @@ var express        = require('express'),
     if (config.environment === 'development') {
         // Enable logger (morgan)
         app.use(morgan('dev'));
-    
+        //config secret
+        app.set('superSecret', config.secret)
         // Disable views cache
         app.set('view cache', false);
     } else if (config.environment === 'production') {

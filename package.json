@@ -16,6 +16,7 @@
     "express": "^4.14.0",
     "express-myconnection": "^1.0.4",
     "helmet": "^2.1.2",
+    "jsonwebtoken": "^7.1.9",
     "logger": "0.0.1",
     "method-override": "^2.3.6",
     "mm-node-logger": "0.0.1",
@@ -23,7 +24,9 @@
     "multer": "^1.2.0",
     "mysql": "^2.11.1",
     "nodemon": "^1.10.2",
+    "passport": "^0.3.2",
     "passport-jwt": "^2.1.0",
+    "passport-local": "^1.0.0",
     "path": "^0.12.7",
     "q": "^1.4.1",
     "redis": "^2.6.2"

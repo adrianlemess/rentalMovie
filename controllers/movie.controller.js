@@ -3,8 +3,7 @@
   *
   *  This file have all methods to handler external requests about movies
  */
-var query        = require('../config/mysql');
-    express      = require('express'),
+    var express      = require('express'),
     movieService = require('../services/movie.service');
 
 module.exports = {
@@ -19,13 +18,14 @@ module.exports = {
     
     rentMovie: function(req, res, next){
         var idMovie = req.params.idMovie;
+        var idUser = 2;
         if (typeof idMovie == 'undefined' || !idMovie.trim()) {
             res.status(400).json("Parâmetro inválido");
         }else {
             movieService.getMovieById(idMovie).then(function(movie){
 
                 if (movie && (movie.quantity_total > movie.quantity_rent)){
-                     movieService.rentMovie(movie).then(function(response){
+                     movieService.rentMovie(movie, idUser).then(function(response){
                          res.json(response);
                      })
                 }else {
@@ -40,14 +40,15 @@ module.exports = {
     
     returnMovie: function(req, res, next){
         var idMovie = req.params.idMovie;
-
+        var idUser = 2;
         if (typeof idMovie == 'undefined' || !idMovie.trim()) {
             res.status(400).json("Parâmetro inválido");
         }else {
             movieService.getMovieById(idMovie).then(function(movie){
-
+                
                 if (movie){
-                    movieService.returnMovie(movie).then(function(response){
+
+                    movieService.returnMovie(movie, idUser).then(function(response){
                         res.json(response)
                     }).fail(function(err){
                         res.status(400).json(err);
