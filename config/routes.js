@@ -22,6 +22,6 @@ router.get('/',function(req, res){
 // //Movies
  router.get('/movies', movieController.availableMoviesList);
  router.get('/movie/rentMovie/:idMovie', movieController.rentMovie);
-// router.put('/movie/returnMovie/:idMovie', movieController.returnMovie);
-router.get('/movie/:movieName', movieController.searchMovie);
+ router.get('/movie/returnMovie/:idMovie', movieController.returnMovie);
+ router.get('/movie/:movieName', movieController.searchMovie);
 module.exports = router;  

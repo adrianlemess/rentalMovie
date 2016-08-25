@@ -11,18 +11,18 @@ login(email, password)
 logoff(user)
 	- Tirar sess�o do usu�rio 
 availableMoviesList()
-	- Listar filmes dispon�veis
+	- Listar filmes dispon�veis x
 	- Negar acesso caso o usu�rio n�o est eja logado
 rentMovie(idMovie)
-	- Alugar um filme
-	- Retornar erro caso o filme n�o esteja dispon�vel (available quantity)
-	- Retornar erro caso o ID do filme n�o exista
+	- Alugar um filme x
+	- Retornar erro caso o filme n�o esteja dispon�vel (available quantity) x
+	- Retornar erro caso o ID do filme n�o exista x
 	- Negar acesso caso o usu�rio n�o esteja logado
 returnMovie(idMovie)
 	- Devolver o filme (incrementar available quantity)
 	- Retornar erro caso o usu�rio devolva um filme que ele n�o tenha alugado (verificar na tabela rent_movie retornar erro caso n�o tenha o registro dele)
 	- Retornar erro caso o usu�rio tente devolve o mesmo filme mais de uma vez (verificar o return_at pra aquele registro)
-	- Retornar erro caso o filme n�o exista
+	- Retornar erro caso o filme n�o exista x
 	- Negar acesso caso o usu�rio n�o esteja logado 
 searchMovie(movieName)
 	- Retornar filme

@@ -1,7 +1,6 @@
-var JwtStrategy = require('passport-jwt').Strategy;
-
-var User = require('../users/users.schema.js');
-var config = require('./config');
+var JwtStrategy = require('passport-jwt').Strategy,
+    User        = require('../users/users.schema.js'),
+    config      = require('./config');
 
 module.exports = function(passport){
     var  opts = {};

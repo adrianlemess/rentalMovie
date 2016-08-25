@@ -1,21 +1,20 @@
-var express = require('express'),
-    config   = require('./config'),
-    path = require('path'),
-    morgan = require('morgan'),
-    cors = require('cors'),
-    helmet = require('helmet'),
-    multer = require('multer'),
-    logger = require('mm-node-logger')(module),
-    bodyParser = require('body-parser'),
-    mysql = require('mysql'),
-    connection  = require('express-myconnection'), 
+var express        = require('express'),
+    config         = require('./config'),
+    path           = require('path'),
+    morgan         = require('morgan'),
+    cors           = require('cors'),
+    helmet         = require('helmet'),
+    multer         = require('multer'),
+    logger         = require('mm-node-logger')(module),
+    bodyParser     = require('body-parser'),
+    mysql          = require('mysql'),
+    connection     = require('express-myconnection'), 
     methodOverride = require('method-override'), //used to manipulate POST
-    // userService = require('../services/user.service'),
-    // movieService = require('../services/movie.service'),
-    app  = express();
-const SixMonths = 15778476000;
+    app            = express();
+
+    const SixMonths = 15778476000;
     function initMiddleware(app) {
- // Showing stack errors
+    // Showing stack errors
     app.set('showStackError', true);
 
     // Enable jsonp
@@ -37,6 +36,7 @@ const SixMonths = 15778476000;
 
 
 }
+//Some security configurations in express
 function initHelmetHeaders(app) {
     app.use(helmet.frameguard());
     app.use(helmet.xssFilter());
@@ -50,6 +50,7 @@ function initHelmetHeaders(app) {
     app.disable("x-powered-by");
 }
 
+//Set some conditions to incoming requests
 function initCrossDomain(app) {
     app.use(cors());
     app.use(function(req, res, next) {
@@ -60,11 +61,12 @@ function initCrossDomain(app) {
         next();
     });
 }
-
+//Initialize the routes file with a root route /api
 function initRoutes(app) {
    app.use('/api', require('./routes'));
 }
 
+//Initialize the seed file with some standards registers to populate the MySql database
 function initDB() {
     
     if(config.seedDB) {
@@ -72,6 +74,7 @@ function initDB() {
     }
 }
 
+//Initialize all aboves functions
 function init() {
     var app = express();
     initMiddleware(app);

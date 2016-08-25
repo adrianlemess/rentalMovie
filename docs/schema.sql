@@ -24,9 +24,11 @@ CREATE TABLE IF NOT EXISTS `rentalmovies`.`movies` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `title` VARCHAR(255) NOT NULL,
   `director` VARCHAR(255) NOT NULL,
-  `quantity_available` INT(11) NULL DEFAULT NULL,
+  `quantity_total` INT(11) NULL DEFAULT NULL,
+  `quantity_rent` INT(11) NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
+AUTO_INCREMENT = 3
 DEFAULT CHARACTER SET = latin1;
 
 
@@ -41,6 +43,7 @@ CREATE TABLE IF NOT EXISTS `rentalmovies`.`users` (
   PRIMARY KEY (`id`),
   UNIQUE INDEX `email` (`email` ASC))
 ENGINE = InnoDB
+AUTO_INCREMENT = 2
 DEFAULT CHARACTER SET = latin1;
 
 
@@ -48,12 +51,21 @@ DEFAULT CHARACTER SET = latin1;
 -- Table `rentalmovies`.`rent_movie`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `rentalmovies`.`rent_movie` (
-  `users_id` INT(11) NOT NULL,
-  `movies_id` INT(11) NOT NULL,
-  `rent_at` DATETIME NULL DEFAULT NULL,
+  `rent_at` DATETIME NOT NULL,
   `return_at` DATETIME NULL DEFAULT NULL,
-  PRIMARY KEY (`users_id`, `movies_id`),
-  INDEX `fk_users_has_movies_users_idx` (`users_id` ASC))
+  `movies_id` INT(11) NOT NULL,
+  `users_id` INT(11) NOT NULL,
+  INDEX `fk_rent_movie_users1_idx` (`users_id` ASC),
+  CONSTRAINT `fk_rent_movie_movies`
+    FOREIGN KEY (`movies_id`)
+    REFERENCES `rentalmovies`.`movies` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_rent_movie_users1`
+    FOREIGN KEY (`users_id`)
+    REFERENCES `rentalmovies`.`users` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = latin1;
 
@@ -62,12 +74,19 @@ DEFAULT CHARACTER SET = latin1;
 -- Table `rentalmovies`.`users_token`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `rentalmovies`.`users_token` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `token` VARCHAR(255) NULL,
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `token` VARCHAR(255) NULL DEFAULT NULL,
   `users_id` INT(11) NOT NULL,
   PRIMARY KEY (`id`, `users_id`),
-  UNIQUE INDEX `token_UNIQUE` (`token` ASC))
-ENGINE = InnoDB;
+  UNIQUE INDEX `token_UNIQUE` (`token` ASC),
+  INDEX `fk_users_token_users1_idx` (`users_id` ASC),
+  CONSTRAINT `fk_users_token_users1`
+    FOREIGN KEY (`users_id`)
+    REFERENCES `rentalmovies`.`users` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1;
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
