@@ -5,8 +5,7 @@
 var express = require('express'),
 router = express.Router();
 movieController = require('../controllers/movie.controller'),
-// userController = require('./controllers/user.controller');
-
+userController = require('../controllers/user.controller');
 
 router.get('/',function(req, res){
     res.send("Hello World");
@@ -16,7 +15,7 @@ router.get('/',function(req, res){
 //Users
 //authentication
 // router.post('/auth/signin', userController.signin);    
-// router.post('/auth/signup', userController.signup);
+ router.post('/auth/signup', userController.signup);
 // router.get('/auth/logout', userController.signout);
 
 // //Movies
