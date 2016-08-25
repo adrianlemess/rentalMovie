@@ -12,7 +12,7 @@ logoff(user)
 	- Tirar sess�o do usu�rio 
 availableMoviesList()
 	- Listar filmes dispon�veis
-	- Negar acesso caso o usu�rio n�o esteja logado
+	- Negar acesso caso o usu�rio n�o est eja logado
 rentMovie(idMovie)
 	- Alugar um filme
 	- Retornar erro caso o filme n�o esteja dispon�vel (available quantity)
