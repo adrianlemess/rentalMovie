@@ -6,15 +6,18 @@ logoff(user)*/
 /**
  * 
  */
+
  var query            = require('../config/mysql'),
     mysql             = require('mysql'),
     config            = require("../config/config"),
     Q                 = require('q'),
     bcrypt            = require('bcryptjs');
     service           = {},
-    SALT_WORK_FACTOR = 10;
+    SALT_WORK_FACTOR  = 10;
 
 service.saveUser = saveUser;
+service.getUserByEmail = getUserByEmail;
+service.comparePassword = comparePassword;
 module.exports = service;  
 
 function saveUser(user){
@@ -40,9 +43,25 @@ function saveUser(user){
     return deferred.promise;
 }
 
+function getUserByEmail(email){
+
+    var deferred = Q.defer();
+    query('SELECT * from users WHERE ? ', {email:email},function(err, user){
+        if (err){deferred.reject(err)}
+        else {
+            if (user.length > 0){
+                deferred.resolve(user[0]);
+            }else {
+                deferred.reject("Usuário não encontrado");
+            }
+        }
+    })
+    return deferred.promise;
+}
+
 function comparePassword(user, passwordToTest){
     var deferred = Q.defer();
-    bcrypt.compare(password, user.password, function(err, isMatch) {
+    bcrypt.compare(passwordToTest, user.password, function(err, isMatch) {
         if (err){
             deferred.reject(err)
         }else {
@@ -51,6 +70,7 @@ function comparePassword(user, passwordToTest){
     });
     return deferred.promise;
 }
+
 
 function hashPassword(password) {
     var deferred = Q.defer();

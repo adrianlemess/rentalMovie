@@ -7,7 +7,12 @@
     movieService = require('../services/movie.service');
 
 module.exports = {
-    
+/**
+ * This method get only the movies that have available copies
+ *
+ * @method availableMoviesList
+ * @returns {res} response with the movies available
+ */
     availableMoviesList:function(req, res, next){
         movieService.availableMoviesList().then(function(response){
             res.json(response);
@@ -15,10 +20,18 @@ module.exports = {
             res.sendStatus(404).json(err);
         })
     }, 
-    
+/**
+ * This method get only the movies that have available copies
+ *
+ * @method rentMovie
+ * @param req.body.idMovie 
+ * @param req.body.idUser
+ * @returns {res} a message that inform if was successfully or not the movie rent
+ */
     rentMovie: function(req, res, next){
-        var idMovie = req.params.idMovie;
-        var idUser = 2;
+        var idMovie = req.body.idMovie;
+        var idUser = req.body.idUser;
+        
         if (typeof idMovie == 'undefined' || !idMovie.trim()) {
             res.status(400).json("Parâmetro inválido");
         }else {
@@ -38,16 +51,22 @@ module.exports = {
         }
     },
     
+/**
+ * This method get only the movies that have available copies
+ *
+ * @method returnMovie
+ * @param req.body.idMovie 
+ * @param req.body.idUser
+ * @returns {res} a message that inform if was successfully or not the movie return
+ */
     returnMovie: function(req, res, next){
-        var idMovie = req.params.idMovie;
-        var idUser = 2;
+        var idMovie = req.body.idMovie;
+        var idUser = req.body.idUser;
         if (typeof idMovie == 'undefined' || !idMovie.trim()) {
             res.status(400).json("Parâmetro inválido");
         }else {
             movieService.getMovieById(idMovie).then(function(movie){
-                
                 if (movie){
-
                     movieService.returnMovie(movie, idUser).then(function(response){
                         res.json(response)
                     }).fail(function(err){
@@ -60,7 +79,13 @@ module.exports = {
         }
 
     },
-
+/**
+ * This method get all the movies that match with the movieName parameter
+ *
+ * @method searchMovie
+ * @param movieName
+ * @returns {res} response with a movie(s) 
+ */
     searchMovie: function(req, res, next){
         var movieName = req.params.movieName;
         if (typeof movieName == 'undefined' || !movieName.trim()) {

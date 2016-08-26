@@ -25,10 +25,10 @@ CREATE TABLE IF NOT EXISTS `rentalmovies`.`movies` (
   `title` VARCHAR(255) NOT NULL,
   `director` VARCHAR(255) NOT NULL,
   `quantity_total` INT(11) NULL DEFAULT NULL,
-  `quantity_rent` INT(11) NULL,
+  `quantity_rent` INT(11) NULL DEFAULT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 3
+AUTO_INCREMENT = 90
 DEFAULT CHARACTER SET = latin1;
 
 
@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS `rentalmovies`.`users` (
   PRIMARY KEY (`id`),
   UNIQUE INDEX `email` (`email` ASC))
 ENGINE = InnoDB
-AUTO_INCREMENT = 2
+AUTO_INCREMENT = 6
 DEFAULT CHARACTER SET = latin1;
 
 
@@ -55,7 +55,10 @@ CREATE TABLE IF NOT EXISTS `rentalmovies`.`rent_movie` (
   `return_at` DATETIME NULL DEFAULT NULL,
   `movies_id` INT(11) NOT NULL,
   `users_id` INT(11) NOT NULL,
+  `id_rent_movie` INT(11) NOT NULL AUTO_INCREMENT,
   INDEX `fk_rent_movie_users1_idx` (`users_id` ASC),
+  INDEX `fk_rent_movie_movies` (`movies_id` ASC),
+  PRIMARY KEY (`id_rent_movie`),
   CONSTRAINT `fk_rent_movie_movies`
     FOREIGN KEY (`movies_id`)
     REFERENCES `rentalmovies`.`movies` (`id`)
@@ -69,6 +72,7 @@ CREATE TABLE IF NOT EXISTS `rentalmovies`.`rent_movie` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = latin1;
 
+
 -- -----------------------------------------------------
 -- Table `rentalmovies`.`users_token`
 -- -----------------------------------------------------
@@ -76,7 +80,8 @@ CREATE TABLE IF NOT EXISTS `rentalmovies`.`users_token` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `token` VARCHAR(255) NULL DEFAULT NULL,
   `users_id` INT(11) NOT NULL,
-  PRIMARY KEY (`id`, `users_id`),
+  `ttl` INT(11) NULL,
+  PRIMARY KEY (`id`),
   UNIQUE INDEX `token_UNIQUE` (`token` ASC),
   INDEX `fk_users_token_users1_idx` (`users_id` ASC),
   CONSTRAINT `fk_users_token_users1`
